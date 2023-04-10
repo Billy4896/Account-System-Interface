@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="bgwidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1200</width>
+      <height>800</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget#bgwidget{
+background-color: qlineargradient(spread:pad, x1:0.045, y1:0.0397727, x2:1, y2:1, stop:0 rgba(227, 227, 227, 255), stop:1 rgba(93, 104, 116, 255));}</string>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>30</y>
+       <width>597</width>
+       <height>66</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 45pt &quot;Berlin Sans FB&quot;;
+</string>
+     </property>
+     <property name="text">
+      <string>QR CODE GENERATOR</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>100</y>
+       <width>431</width>
+       <height>431</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>QR_CODES/github-modified.png</pixmap>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="createAccountButton">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>630</y>
+       <width>271</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#createAccountButton {
+    border-radius: 20px;
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 217, 97, 255), stop:1 rgba(247, 107, 28, 255));
+    font: 75 17pt &quot;Berlin Sans FB&quot;;
+}
+
+QPushButton#createAccountButton:hover {
+
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 	 		rgba(176, 149, 53, 255), stop:1 rgba(173, 74, 0, 255));
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Create Account</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="signInButton">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>530</y>
+       <width>271</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#signInButton {
+    border-radius: 20px;
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 217, 97, 255), stop:1 rgba(247, 107, 28, 255));
+    font: 75 17pt &quot;Berlin Sans FB&quot;;
+}
+
+QPushButton#signInButton:hover {
+
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 	 		rgba(176, 149, 53, 255), stop:1 rgba(173, 74, 0, 255));
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Sign In</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="recoverAccountButton">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>730</y>
+       <width>271</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#recoverAccountButton {
+    border-radius: 20px;
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(250, 217, 97, 255), stop:1 rgba(247, 107, 28, 255));
+    font: 75 17pt &quot;Berlin Sans FB&quot;;
+}
+
+QPushButton#recoverAccountButton:hover {
+
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 	 		rgba(176, 149, 53, 255), stop:1 rgba(173, 74, 0, 255));
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Recover Account</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
