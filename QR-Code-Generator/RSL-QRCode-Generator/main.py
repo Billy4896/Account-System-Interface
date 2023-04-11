@@ -212,6 +212,23 @@ class AccountRecoveryPage2(QMainWindow):
         super(AccountRecoveryPage2, self).__init__()
         loadUi("AccountRecoveryPage2.ui", self)
         self.load_user_phrase()
+        self.backButton.clicked.connect(self.gotoAccountRecoveryPage)
+        self.proceedButton.clicked.connect(self.verify_user_phrase)
+
+    def gotoMainPage(self):
+        mainPage = MainPage()
+        widget.addWidget(mainPage)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def gotoAccountRecoveryPage(self):
+        accountRecovery = AccountRecoveryPage()
+        widget.addWidget(accountRecovery)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def gotoAccountRecoveryPage3(self):
+        accountRecovery3 = AccountRecoveryPage3()
+        widget.addWidget(accountRecovery3)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def load_user_phrase(self):
         f = 'TempUsernames.txt'
@@ -238,7 +255,60 @@ class AccountRecoveryPage2(QMainWindow):
                 recoveryPhrase = list(dictionary.values())[1]
                 self.recoveryPhraseLabel.setText(f"{recoveryPhrase}")
 
+    def verify_user_phrase(self):
+        f = 'TempUsernames.txt'
+        try:
+            # Read all the usernames from the file
+            with open(f, "r") as file:
+                tempUser = file.read().strip()
+                print(tempUser)
+        # If the file cannot be found print error statement.
+        except FileNotFoundError:
+            print("File does not exist, creating new file...")
 
+        search_key1 = "username"
+        search_value1 = tempUser  # value1
+        search_key2 = "recoveryPass"
+        search_value2 = self.passwordTxtInput.text().upper()
+        ff = "UserQuestion.txt"
+
+        try:
+            # Read all the usernames from the file
+            with open(ff, "r") as file:
+                dict_list = [json.loads(line) for line in file]
+                print(dict_list)
+        # Handle any exceptions that are raised
+        except Exception as e:
+            print("Error:", e)
+
+        for dictionary in dict_list:
+            if dictionary.get(search_key1) == search_value1 and hashlib.sha512(search_value2.encode()).hexdigest() == dictionary.get(search_key2):
+                print("A match is found!")
+                self.gotoAccountRecoveryPage3()
+
+
+class AccountRecoveryPage3(QMainWindow):
+    def __init__(self):
+        super(AccountRecoveryPage3, self).__init__()
+        loadUi("AccountRecoveryPage3.ui", self)
+        self.mainMenuButton.clicked.connect(self.gotoMainPage)
+
+    def gotoMainPage(self):
+        mainPage = MainPage()
+        widget.addWidget(mainPage)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def password_match(self):
+        password = self.passwordTxtInput.text().upper()
+        repassword = self.repasswordTxtInput.text().upper()
+
+        if password == repassword:
+            self.update_password()
+        else:
+            self.errorLabel.setText("The passwords entered do not match.")
+
+    def update_password(self):
+        print("Test")
 
 # main
 app = QApplication(sys.argv)
