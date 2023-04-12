@@ -11,42 +11,72 @@ from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 
 
-class MainPage(QMainWindow):
-    def __init__(self):
-        super(MainPage, self).__init__()
-        loadUi("MainPage.ui", self)
-        self.signInButton.clicked.connect(self.gotoLoginPage)
-        self.createAccountButton.clicked.connect(self.gotoCreateAccountPage)
-        self.recoverAccountButton.clicked.connect(self.gotoAccountRecoveryPage)
+class Navigation:
+    """Navigation class: Provides functionality to navigate between different pages of the application."""
 
-    def gotoLoginPage(self):
+    @staticmethod
+    def goto_main_page():
+        """Sets the index of MainPage into view."""
+        main_page = MainPage()
+        widget.addWidget(main_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    @staticmethod
+    def goto_login_page():
+        """Sets the index of LoginPage into view."""
         login = LoginPage()
         widget.addWidget(login)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def gotoCreateAccountPage(self):
-        createAccount = CreateAccountPage()
-        widget.addWidget(createAccount)
+    @staticmethod
+    def goto_create_account_page():
+        """Sets the index of CreateAccountPage into view."""
+        create_account = CreateAccountPage()
+        widget.addWidget(create_account)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def gotoAccountRecoveryPage(self):
-        accountRecovery = AccountRecoveryPage()
-        widget.addWidget(accountRecovery)
+    @staticmethod
+    def goto_account_recovery_page():
+        """Sets the index of AccountRecoveryPage into view."""
+        account_recovery = AccountRecoveryPage()
+        widget.addWidget(account_recovery)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    @staticmethod
+    def goto_account_recovery_page2():
+        """Sets the index of AccountRecoveryPage2 into view."""
+        accountRecovery2 = AccountRecoveryPage2()
+        widget.addWidget(accountRecovery2)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    @staticmethod
+    def goto_account_recovery_page3():
+        """Sets the index of AccountRecoveryPage3 into view."""
+        accountRecovery3 = AccountRecoveryPage3()
+        widget.addWidget(accountRecovery3)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
+class MainPage(QMainWindow):
+    """Main Page class: Landing page once the application has been booted."""
+    def __init__(self):
+        """Loads the MainpPage.ui and provides functionality to the signInButton, createAccountButton & the recoverAccountButton."""
+        super(MainPage, self).__init__()
+        loadUi("MainPage.ui", self)
+        self.signInButton.clicked.connect(Navigation.goto_login_page)
+        self.createAccountButton.clicked.connect(Navigation.goto_create_account_page)
+        self.recoverAccountButton.clicked.connect(Navigation.goto_account_recovery_page)
 
 
 class LoginPage(QMainWindow):
+    """Login Page class: Provides access to the user to log into the application."""
     def __init__(self):
+        """Loads the LoginPage.ui and provides functionality to the signInButton & the backButton. The passwordTxtInput is also masked here."""
         super(LoginPage, self).__init__()
         loadUi("LoginPage.ui", self)
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.backButton.clicked.connect(self.gotoMainPage)
+        self.backButton.clicked.connect(Navigation.goto_main_page)
         self.signInButton.clicked.connect(self.login)
-
-    def gotoMainPage(self):
-        mainPage = MainPage()
-        widget.addWidget(mainPage)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def login(self):
         """Verifies the account details on login attempt"""
@@ -55,9 +85,13 @@ class LoginPage(QMainWindow):
         username = self.usernameTxtInput.text().upper()
         password = self.passwordTxtInput.text().upper()
         f = "UserDetails.txt"
-        # Read all the dictionaries from the file
-        with open(f, "r") as file:
-            dict_list = [json.loads(line) for line in file]
+        try:
+            # Read all the dictionaries from the file
+            with open(f, "r") as file:
+                dict_list = [json.loads(line) for line in file]
+        # Throw exception if the file does not exist.
+        except FileNotFoundError:
+            print("File does not exist, creating new file...")
         # Search for a matching account
         match_found = False
         for dictionary in dict_list:
@@ -65,7 +99,7 @@ class LoginPage(QMainWindow):
                     password.encode()).hexdigest() == dictionary.get(search_key2):
                 print("Login successful!")
                 match_found = True
-                self.gotoMainPage()  # TODO: Change to the hub page when created#
+                Navigation.goto_main_page()  # TODO: Change to the hub page when created#
                 break
         # Display error message if no match is found
         if not match_found:
@@ -73,20 +107,17 @@ class LoginPage(QMainWindow):
 
 
 class CreateAccountPage(QMainWindow):
+    """Create Account Page class: Provides access to the user to create an account for the application."""
     def __init__(self):
+        """Loads the CreateAccountPage.ui and provides functionality to the createButton & the backButton. The passwordTxtInput is also masked here."""
         super(CreateAccountPage, self).__init__()
         loadUi("CreateAccountPage.ui", self)
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.createButton.clicked.connect(self.verify_account_creation)
-        self.backButton.clicked.connect(self.gotoMainPage)
-
-    def gotoMainPage(self):
-        mainPage = MainPage()
-        widget.addWidget(mainPage)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+        self.backButton.clicked.connect(Navigation.goto_main_page)
 
     def verify_account_creation(self):
-        """Verify the username and password pass the required criteria"""
+        """Verify the username and password and pass the required criteria"""
         self.errorLabel.setText("")
         username = self.usernameTxtInput.text().upper()
         password = self.passwordTxtInput.text().upper()
@@ -166,23 +197,16 @@ class CreateAccountPage(QMainWindow):
 
 
 class AccountRecoveryPage(QMainWindow):
+    """Account Recovery Page class: Provides access to the user to recover an account used in the application."""
     def __init__(self):
+        """Loads the AccountRecoveryPage.ui and provides functionality to the proceedButton & the backButton."""
         super(AccountRecoveryPage, self).__init__()
         loadUi("AccountRecoveryPage.ui", self)
-        self.backButton.clicked.connect(self.gotoMainPage)
+        self.backButton.clicked.connect(Navigation.goto_main_page)
         self.proceedButton.clicked.connect(self.verify_username)
 
-    def gotoMainPage(self):
-        mainPage = MainPage()
-        widget.addWidget(mainPage)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def gotoAccountRecoveryPage2(self):
-        accountRecovery2 = AccountRecoveryPage2()
-        widget.addWidget(accountRecovery2)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
     def verify_username(self):
+        """A function that will verify the user account exists."""
         f = 'Usernames.txt'
         ff = 'TempUsernames.txt'
         inputUser = self.usernameTxtInput.text().upper()
@@ -204,31 +228,17 @@ class AccountRecoveryPage(QMainWindow):
                 # Write the valid username to the file
                 with open(ff, "w") as file:
                     file.write(inputUser)
-                self.gotoAccountRecoveryPage2()
+                Navigation.goto_account_recovery_page2()
 
 
 class AccountRecoveryPage2(QMainWindow):
+    """Account Recovery Page2 class: Provides access to the user to recover an account used in the application."""
     def __init__(self):
         super(AccountRecoveryPage2, self).__init__()
         loadUi("AccountRecoveryPage2.ui", self)
         self.load_user_phrase()
-        self.backButton.clicked.connect(self.gotoAccountRecoveryPage)
+        self.backButton.clicked.connect(Navigation.goto_account_recovery_page)
         self.proceedButton.clicked.connect(self.verify_user_phrase)
-
-    def gotoMainPage(self):
-        mainPage = MainPage()
-        widget.addWidget(mainPage)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def gotoAccountRecoveryPage(self):
-        accountRecovery = AccountRecoveryPage()
-        widget.addWidget(accountRecovery)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def gotoAccountRecoveryPage3(self):
-        accountRecovery3 = AccountRecoveryPage3()
-        widget.addWidget(accountRecovery3)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def load_user_phrase(self):
         f = 'TempUsernames.txt'
@@ -284,19 +294,18 @@ class AccountRecoveryPage2(QMainWindow):
         for dictionary in dict_list:
             if dictionary.get(search_key1) == search_value1 and hashlib.sha512(search_value2.encode()).hexdigest() == dictionary.get(search_key2):
                 print("A match is found!")
-                self.gotoAccountRecoveryPage3()
+                Navigation.goto_account_recovery_page3()
 
 
 class AccountRecoveryPage3(QMainWindow):
+    """Account Recovery Page3 class: Provides access to the user to recover an account used in the application."""
     def __init__(self):
         super(AccountRecoveryPage3, self).__init__()
         loadUi("AccountRecoveryPage3.ui", self)
-        self.mainMenuButton.clicked.connect(self.gotoMainPage)
-
-    def gotoMainPage(self):
-        mainPage = MainPage()
-        widget.addWidget(mainPage)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+        self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.repasswordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.mainMenuButton.clicked.connect(Navigation.goto_main_page)
+        self.proceedButton.clicked.connect(self.password_match)
 
     def password_match(self):
         password = self.passwordTxtInput.text().upper()
@@ -308,9 +317,45 @@ class AccountRecoveryPage3(QMainWindow):
             self.errorLabel.setText("The passwords entered do not match.")
 
     def update_password(self):
-        print("Test")
+        ff = "UserDetails.txt"
+        regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+        search_key1 = "username"
+        modify_key = "password"
+        new_value = self.passwordTxtInput.text().upper()
 
-# main
+        if len(new_value) < 8:
+            self.errorLabel.setText("Password length must be greater than 8 characters long.")
+
+        elif not (any(c.isalpha() for c in new_value) and any(c.isdigit() for c in new_value)):
+            self.errorLabel.setText("Password must contain a mixture of letters, numbers and special characters.")
+
+        elif regex.search(new_value) is None:
+            self.errorLabel.setText("Password must contain special characters.")
+
+        else:
+            # Hash the password using SHA-256
+            hashed_password = hashlib.sha256(new_value.encode()).hexdigest()
+
+            # Read all the dictionaries from the file
+            with open(ff, "r") as file:
+                dict_list = [json.loads(line) for line in file]
+
+            # Modify the required dictionary
+            for dictionary in dict_list:
+                if dictionary.get(search_key1) == hashed_password:
+                    dictionary[modify_key] = new_value
+                    break  # Stop searching after the first match is found
+
+            # Write all the dictionaries back to the file
+            with open(ff, "w") as file:
+                for dictionary in dict_list:
+                    file.write(json.dumps(dictionary) + "\n")
+
+            print("Password has been successfully changed.")
+            Navigation.goto_main_page()
+
+
+# Main - The following block of code runs the application.
 app = QApplication(sys.argv)
 mainPage = MainPage()
 widget = QStackedWidget()
