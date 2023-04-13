@@ -31,7 +31,7 @@ background-color: qlineargradient(spread:pad, x1:0.045, y1:0.0397727, x2:1, y2:1
      <property name="geometry">
       <rect>
        <x>470</x>
-       <y>580</y>
+       <y>630</y>
        <width>271</width>
        <height>61</height>
       </rect>
@@ -132,7 +132,7 @@ QPushButton#proceedButton:hover {
      <property name="geometry">
       <rect>
        <x>470</x>
-       <y>670</y>
+       <y>720</y>
        <width>271</width>
        <height>61</height>
       </rect>
@@ -157,7 +157,7 @@ QPushButton#mainMenuButton:hover {
      <property name="geometry">
       <rect>
        <x>460</x>
-       <y>540</y>
+       <y>590</y>
        <width>301</width>
        <height>21</height>
       </rect>
@@ -460,6 +460,22 @@ QPushButton#backButton:hover {
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="showPasswordCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>530</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 12pt &quot;Berlin Sans FB&quot;; color: rgb(0, 0, 0)</string>
+     </property>
+     <property name="text">
+      <string>Show password</string>
      </property>
     </widget>
    </widget>

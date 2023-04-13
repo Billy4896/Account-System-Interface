@@ -6,7 +6,8 @@ import sys
 import re
 import json
 import hashlib
-from PyQt5 import QtWidgets
+import PyQt5.QtCore as QtCore
+from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 
@@ -77,6 +78,7 @@ class LoginPage(QMainWindow):
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.backButton.clicked.connect(Navigation.goto_main_page)
         self.signInButton.clicked.connect(self.login)
+        self.showPasswordCheckBox.stateChanged.connect(self.show_or_hide_password)
 
     def login(self):
         """Verifies the account details on login attempt"""
@@ -105,6 +107,13 @@ class LoginPage(QMainWindow):
         if not match_found:
             self.errorLabel.setText("Incorrect login details, please try again.")
 
+    def show_or_hide_password(self):
+        """A function that will take show or hide the password inputs by detecting if a checkbox is checked."""
+        if self.showPasswordCheckBox.isChecked():
+            self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Normal)
+        else:
+            self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
+
 
 class CreateAccountPage(QMainWindow):
     """Create Account Page class: Provides access to the user to create an account for the application."""
@@ -115,6 +124,7 @@ class CreateAccountPage(QMainWindow):
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.createButton.clicked.connect(self.verify_account_creation)
         self.backButton.clicked.connect(Navigation.goto_main_page)
+        self.showPasswordCheckBox.stateChanged.connect(self.show_or_hide_password)
 
     def verify_account_creation(self):
         """Verify the username and password and pass the required criteria"""
@@ -194,6 +204,14 @@ class CreateAccountPage(QMainWindow):
         # If the file cannot be found print error statement.
         except FileNotFoundError:
             print("File does not exist, creating new file...")
+        Navigation.goto_main_page()
+
+    def show_or_hide_password(self):
+        """A function that will take show or hide the password inputs by detecting if a checkbox is checked."""
+        if self.showPasswordCheckBox.isChecked():
+            self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Normal)
+        else:
+            self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
 
 
 class AccountRecoveryPage(QMainWindow):
@@ -241,6 +259,7 @@ class AccountRecoveryPage2(QMainWindow):
         self.proceedButton.clicked.connect(self.verify_user_phrase)
 
     def load_user_phrase(self):
+        """A function that loads the users recovery phrase."""
         f = 'TempUsernames.txt'
         try:
             # Read all the usernames from the file
@@ -266,6 +285,7 @@ class AccountRecoveryPage2(QMainWindow):
                 self.recoveryPhraseLabel.setText(f"{recoveryPhrase}")
 
     def verify_user_phrase(self):
+        """A function that verifies the users recovery phrase."""
         f = 'TempUsernames.txt'
         try:
             # Read all the usernames from the file
@@ -306,8 +326,10 @@ class AccountRecoveryPage3(QMainWindow):
         self.repasswordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.mainMenuButton.clicked.connect(Navigation.goto_main_page)
         self.proceedButton.clicked.connect(self.password_match)
+        self.showPasswordCheckBox.stateChanged.connect(self.show_or_hide_password)
 
     def password_match(self):
+        """A function that will compare password strings"""
         password = self.passwordTxtInput.text().upper()
         repassword = self.repasswordTxtInput.text().upper()
 
@@ -317,6 +339,7 @@ class AccountRecoveryPage3(QMainWindow):
             self.errorLabel.setText("The passwords entered do not match.")
 
     def update_password(self):
+        """A function that will update the user password details in the UserDetails.txt"""
         ff = "UserDetails.txt"
         regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
         search_key1 = "username"
@@ -353,6 +376,16 @@ class AccountRecoveryPage3(QMainWindow):
 
             print("Password has been successfully changed.")
             Navigation.goto_main_page()
+
+    def show_or_hide_password(self):
+        """A function that will take show or hide the password inputs by detecting if a checkbox is checked."""
+        if self.showPasswordCheckBox.isChecked():
+            self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Normal)
+            self.repasswordTxtInput.setEchoMode(QtWidgets.QLineEdit.Normal)
+        else:
+            self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
+            self.repasswordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
+
 
 
 # Main - The following block of code runs the application.
