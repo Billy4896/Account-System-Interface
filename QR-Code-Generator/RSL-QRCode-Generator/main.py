@@ -10,6 +10,7 @@ import PyQt5.QtCore as QtCore
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
+from winotify import Notification, audio
 
 
 class Navigation:
@@ -60,6 +61,7 @@ class Navigation:
 
 class MainPage(QMainWindow):
     """Main Page class: Landing page once the application has been booted."""
+
     def __init__(self):
         """Loads the MainpPage.ui and provides functionality to the signInButton, createAccountButton & the recoverAccountButton."""
         super(MainPage, self).__init__()
@@ -71,6 +73,7 @@ class MainPage(QMainWindow):
 
 class LoginPage(QMainWindow):
     """Login Page class: Provides access to the user to log into the application."""
+
     def __init__(self):
         """Loads the LoginPage.ui and provides functionality to the signInButton & the backButton. The passwordTxtInput is also masked here."""
         super(LoginPage, self).__init__()
@@ -117,6 +120,7 @@ class LoginPage(QMainWindow):
 
 class CreateAccountPage(QMainWindow):
     """Create Account Page class: Provides access to the user to create an account for the application."""
+
     def __init__(self):
         """Loads the CreateAccountPage.ui and provides functionality to the createButton & the backButton. The passwordTxtInput is also masked here."""
         super(CreateAccountPage, self).__init__()
@@ -139,7 +143,7 @@ class CreateAccountPage(QMainWindow):
             with open(f, "r") as file:
                 # Read the binary file to a list to test the while loop
                 lines = file.read().split('\n')
-
+                print(lines)
         # If the file cannot be found print error statement.
         except FileNotFoundError:
             print("File does not exist, creating file...")
@@ -165,7 +169,7 @@ class CreateAccountPage(QMainWindow):
                 print("File does not exist, creating new file...")
 
             self.create_account()
-            print("Account successfully created")
+            print("Verify account creation complete.")
 
     def create_account(self):
         """A function that will create the user account"""
@@ -205,6 +209,15 @@ class CreateAccountPage(QMainWindow):
         except FileNotFoundError:
             print("File does not exist, creating new file...")
         Navigation.goto_main_page()
+        # Run the windows notification.
+        toast = Notification(app_id="QR Code Generator",
+                             title="Account Created!",
+                             msg=f"{username} successfully created",
+                             icon=r"C:\QR-Code-Generator\QR-Code-Generator\RSL-QRCode-Generator\Sprites\icons\user (6).png",
+                             duration="short")
+        toast.set_audio(audio.Default, loop=False)
+        toast.show()
+        print("Account successfully created.")
 
     def show_or_hide_password(self):
         """A function that will take show or hide the password inputs by detecting if a checkbox is checked."""
@@ -216,6 +229,7 @@ class CreateAccountPage(QMainWindow):
 
 class AccountRecoveryPage(QMainWindow):
     """Account Recovery Page class: Provides access to the user to recover an account used in the application."""
+
     def __init__(self):
         """Loads the AccountRecoveryPage.ui and provides functionality to the proceedButton & the backButton."""
         super(AccountRecoveryPage, self).__init__()
@@ -247,10 +261,12 @@ class AccountRecoveryPage(QMainWindow):
                 with open(ff, "w") as file:
                     file.write(inputUser)
                 Navigation.goto_account_recovery_page2()
+                print("Username verified moving to step 2...")
 
 
 class AccountRecoveryPage2(QMainWindow):
     """Account Recovery Page2 class: Provides access to the user to recover an account used in the application."""
+
     def __init__(self):
         super(AccountRecoveryPage2, self).__init__()
         loadUi("AccountRecoveryPage2.ui", self)
@@ -283,6 +299,7 @@ class AccountRecoveryPage2(QMainWindow):
             if dictionary.get(search_key) == search_value:
                 recoveryPhrase = list(dictionary.values())[1]
                 self.recoveryPhraseLabel.setText(f"{recoveryPhrase}")
+                print("User phrase loaded...")
 
     def verify_user_phrase(self):
         """A function that verifies the users recovery phrase."""
@@ -312,13 +329,15 @@ class AccountRecoveryPage2(QMainWindow):
             print("Error:", e)
 
         for dictionary in dict_list:
-            if dictionary.get(search_key1) == search_value1 and hashlib.sha512(search_value2.encode()).hexdigest() == dictionary.get(search_key2):
+            if dictionary.get(search_key1) == search_value1 and hashlib.sha512(
+                    search_value2.encode()).hexdigest() == dictionary.get(search_key2):
                 print("A match is found!")
                 Navigation.goto_account_recovery_page3()
-
+                print("User phrase verified moving to step 3...")
 
 class AccountRecoveryPage3(QMainWindow):
     """Account Recovery Page3 class: Provides access to the user to recover an account used in the application."""
+
     def __init__(self):
         super(AccountRecoveryPage3, self).__init__()
         loadUi("AccountRecoveryPage3.ui", self)
@@ -375,7 +394,25 @@ class AccountRecoveryPage3(QMainWindow):
                     file.write(json.dumps(dictionary) + "\n")
 
             print("Password has been successfully changed.")
+
+            f = 'TempUsernames.txt'
+            try:
+                # Read all the usernames from the file
+                with open(f, "r") as file:
+                    tempUser = file.read().strip()
+                    print(tempUser)
+            # If the file cannot be found print error statement.
+            except FileNotFoundError:
+                print("File does not exist, creating new file...")
             Navigation.goto_main_page()
+            # Run the windows notification.
+            toast = Notification(app_id="QR Code Generator",
+                                 title="Password Reset!",
+                                 msg=f"{tempUser}'s password has been successfully changed.",
+                                 icon=r"C:\QR-Code-Generator\QR-Code-Generator\RSL-QRCode-Generator\Sprites\icons\password-manager.png",
+                                 duration="short")
+            toast.set_audio(audio.Default, loop=False)
+            toast.show()
 
     def show_or_hide_password(self):
         """A function that will take show or hide the password inputs by detecting if a checkbox is checked."""
@@ -385,7 +422,6 @@ class AccountRecoveryPage3(QMainWindow):
         else:
             self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
             self.repasswordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
-
 
 
 # Main - The following block of code runs the application.
