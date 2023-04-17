@@ -6,6 +6,7 @@ import sys
 import re
 import json
 import hashlib
+import webbrowser
 import PyQt5.QtCore as QtCore
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
@@ -69,6 +70,30 @@ class MainPage(QMainWindow):
         self.signInButton.clicked.connect(Navigation.goto_login_page)
         self.createAccountButton.clicked.connect(Navigation.goto_create_account_page)
         self.recoverAccountButton.clicked.connect(Navigation.goto_account_recovery_page)
+        self.facebookButton.clicked.connect(MainPage.share_on_facebook)
+        self.linkedinButton.clicked.connect(MainPage.share_on_linkedin)
+        self.twitterButton.clicked.connect(MainPage.share_on_twitter)
+        self.githubButton.clicked.connect(MainPage.share_on_github)
+
+    def share_on_facebook(self):
+        url = 'https://github.com/Billy4896/QR-Code-Generator'
+        facebook_share_url = 'https://www.facebook.com/sharer.php?u=' + url
+        webbrowser.open(facebook_share_url)
+
+    def share_on_linkedin(self):
+        url = 'https://github.com/Billy4896/QR-Code-Generator'
+        linkedin_share_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url
+        webbrowser.open(linkedin_share_url)
+
+    def share_on_twitter(self):
+        url = 'https://github.com/Billy4896/QR-Code-Generator'
+        twitter_share_url = 'https://twitter.com/intent/tweet?url=' + url
+        webbrowser.open(twitter_share_url)
+
+    def share_on_github(self):
+        url = 'https://github.com/Billy4896/QR-Code-Generator'
+        github_share_url = 'https://github.com/login?return_to=' + url
+        webbrowser.open(github_share_url)
 
 
 class LoginPage(QMainWindow):

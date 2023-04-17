@@ -24,17 +24,17 @@ class QrCode():
     def set_url(self, url):
         self.url = url
 
-    def generate_qr_code(self, Serviceman):
+    def generate_qr_code(self):
         url = self.url
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(url)
         qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
-        imageName = Serviceman.get_service_number()
+        img = qr.make_image(fill_color="black", back_color="transparent")
+        imageName = self.imageName
         img.save(f"QR_codes/{imageName}.png")
 
 
-url = "https://github.com/Billy4896?tab=repositories"
-imageName = "github"
+url = "https://github.com/Billy4896/QR-Code-Generator"
+imageName = "githubPurple"
 a = QrCode(url, imageName)
 a.generate_qr_code()
