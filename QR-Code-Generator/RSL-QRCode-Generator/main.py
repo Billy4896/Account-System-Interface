@@ -74,6 +74,8 @@ class MainPage(QMainWindow):
         self.linkedinButton.clicked.connect(MainPage.share_on_linkedin)
         self.twitterButton.clicked.connect(MainPage.share_on_twitter)
         self.githubButton.clicked.connect(MainPage.share_on_github)
+        self.redditButton.clicked.connect(MainPage.share_on_reddit)
+        self.gmailButton.clicked.connect(MainPage.send_email)
 
     def share_on_facebook(self):
         url = 'https://github.com/Billy4896/QR-Code-Generator'
@@ -95,6 +97,15 @@ class MainPage(QMainWindow):
         github_share_url = 'https://github.com/login?return_to=' + url
         webbrowser.open(github_share_url)
 
+    def share_on_reddit(self):
+        url = 'https://github.com/Billy4896/QR-Code-Generator'
+        reddit_share_url = 'https://www.reddit.com/submit?url=' + url
+        webbrowser.open(reddit_share_url)
+
+    def send_email(self):
+        email_url = 'mailto:' + 'example@example.com'
+        webbrowser.open(email_url)
+
 
 class LoginPage(QMainWindow):
     """Login Page class: Provides access to the user to log into the application."""
@@ -103,6 +114,8 @@ class LoginPage(QMainWindow):
         """Loads the LoginPage.ui and provides functionality to the signInButton & the backButton. The passwordTxtInput is also masked here."""
         super(LoginPage, self).__init__()
         loadUi("LoginPage.ui", self)
+        self.createAccountButton.clicked.connect(Navigation.goto_create_account_page)
+        self.recoverAccountButton.clicked.connect(Navigation.goto_account_recovery_page)
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.backButton.clicked.connect(Navigation.goto_main_page)
         self.signInButton.clicked.connect(self.login)
@@ -150,6 +163,8 @@ class CreateAccountPage(QMainWindow):
         """Loads the CreateAccountPage.ui and provides functionality to the createButton & the backButton. The passwordTxtInput is also masked here."""
         super(CreateAccountPage, self).__init__()
         loadUi("CreateAccountPage.ui", self)
+        self.signInButton.clicked.connect(Navigation.goto_login_page)
+        self.recoverAccountButton_2.clicked.connect(Navigation.goto_account_recovery_page)
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.createButton.clicked.connect(self.verify_account_creation)
         self.backButton.clicked.connect(Navigation.goto_main_page)
@@ -259,6 +274,8 @@ class AccountRecoveryPage(QMainWindow):
         """Loads the AccountRecoveryPage.ui and provides functionality to the proceedButton & the backButton."""
         super(AccountRecoveryPage, self).__init__()
         loadUi("AccountRecoveryPage.ui", self)
+        self.signInButton.clicked.connect(Navigation.goto_login_page)
+        self.createAccountButton.clicked.connect(Navigation.goto_create_account_page)
         self.backButton.clicked.connect(Navigation.goto_main_page)
         self.proceedButton.clicked.connect(self.verify_username)
 
@@ -296,6 +313,8 @@ class AccountRecoveryPage2(QMainWindow):
         super(AccountRecoveryPage2, self).__init__()
         loadUi("AccountRecoveryPage2.ui", self)
         self.load_user_phrase()
+        self.signInButton.clicked.connect(Navigation.goto_login_page)
+        self.createAccountButton.clicked.connect(Navigation.goto_create_account_page)
         self.backButton.clicked.connect(Navigation.goto_account_recovery_page)
         self.proceedButton.clicked.connect(self.verify_user_phrase)
 
@@ -366,6 +385,8 @@ class AccountRecoveryPage3(QMainWindow):
     def __init__(self):
         super(AccountRecoveryPage3, self).__init__()
         loadUi("AccountRecoveryPage3.ui", self)
+        self.signInButton.clicked.connect(Navigation.goto_login_page)
+        self.createAccountButton.clicked.connect(Navigation.goto_create_account_page)
         self.passwordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.repasswordTxtInput.setEchoMode(QtWidgets.QLineEdit.Password)
         self.mainMenuButton.clicked.connect(Navigation.goto_main_page)

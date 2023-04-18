@@ -17,9 +17,9 @@
    <widget class="QWidget" name="bgwidget" native="true">
     <property name="geometry">
      <rect>
-      <x>-1</x>
+      <x>0</x>
       <y>0</y>
-      <width>1201</width>
+      <width>1200</width>
       <height>800</height>
      </rect>
     </property>
@@ -378,7 +378,7 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="githubButton">
      <property name="geometry">
       <rect>
-       <x>660</x>
+       <x>970</x>
        <y>730</y>
        <width>41</width>
        <height>41</height>
@@ -407,6 +407,90 @@ p, li { white-space: pre-wrap; }
       </size>
      </property>
     </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>970</x>
+       <y>700</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>More Information</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="gmailButton">
+     <property name="geometry">
+      <rect>
+       <x>1020</x>
+       <y>730</y>
+       <width>41</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">    QPushButton#gmailButton {
+        background-color: transparent;
+		border: none;
+    }
+    QPushButton#gmailButton:hover {
+        background-color: rgb(230, 230, 230)
+	 }</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>Sprites/icons/1220367_gmail_google_logo_icon.png</normaloff>Sprites/icons/1220367_gmail_google_logo_icon.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="redditButton">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>730</y>
+       <width>41</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">    QPushButton#redditButton {
+        background-color: transparent;
+		border: none;
+    }
+    QPushButton#redditButton:hover {
+        background-color: rgb(230, 230, 230)
+	 }</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>Sprites/icons/3225187_app_logo_media_popular_reddit_icon.png</normaloff>Sprites/icons/3225187_app_logo_media_popular_reddit_icon.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
     <zorder>widget</zorder>
     <zorder>label_3</zorder>
     <zorder>label</zorder>
@@ -417,6 +501,9 @@ p, li { white-space: pre-wrap; }
     <zorder>linkedinButton</zorder>
     <zorder>twitterButton</zorder>
     <zorder>githubButton</zorder>
+    <zorder>label_6</zorder>
+    <zorder>gmailButton</zorder>
+    <zorder>redditButton</zorder>
    </widget>
   </widget>
  </widget>
