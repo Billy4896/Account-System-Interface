@@ -103,7 +103,7 @@ class MainPage(QMainWindow):
         webbrowser.open(reddit_share_url)
 
     def send_email(self):
-        email_url = 'mailto:' + 'example@example.com'
+        email_url = 'mailto:' + 'billygithubprojects@gmail.com'
         webbrowser.open(email_url)
 
 
