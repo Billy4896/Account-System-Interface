@@ -122,8 +122,8 @@ QPushButton#proceedButton:hover {
     <widget class="QLabel" name="errorLabel">
      <property name="geometry">
       <rect>
-       <x>660</x>
-       <y>610</y>
+       <x>670</x>
+       <y>470</y>
        <width>301</width>
        <height>21</height>
       </rect>
@@ -135,7 +135,7 @@ QPushButton#proceedButton:hover {
       <string/>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">

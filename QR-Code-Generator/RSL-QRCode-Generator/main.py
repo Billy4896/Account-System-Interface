@@ -378,6 +378,8 @@ class AccountRecoveryPage2(QMainWindow):
                 print("A match is found!")
                 Navigation.goto_account_recovery_page3()
                 print("User phrase verified moving to step 3...")
+            else:
+                self.errorLabel.setText("The answer entered is not correct.")
 
 class AccountRecoveryPage3(QMainWindow):
     """Account Recovery Page3 class: Provides access to the user to recover an account used in the application."""

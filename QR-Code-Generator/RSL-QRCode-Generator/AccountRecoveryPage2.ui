@@ -185,9 +185,9 @@ QPushButton#backButton:hover {
     <widget class="QLabel" name="errorLabel">
      <property name="geometry">
       <rect>
-       <x>550</x>
-       <y>610</y>
-       <width>501</width>
+       <x>670</x>
+       <y>570</y>
+       <width>381</width>
        <height>21</height>
       </rect>
      </property>
@@ -198,7 +198,7 @@ QPushButton#backButton:hover {
       <string/>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
     <widget class="QWidget" name="bgwidget_2" native="true">
@@ -470,7 +470,7 @@ QPushButton#backButton:hover {
       <string/>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
     <widget class="QWidget" name="widget" native="true">
