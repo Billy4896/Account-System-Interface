@@ -381,6 +381,7 @@ class AccountRecoveryPage2(QMainWindow):
             else:
                 self.errorLabel.setText("The answer entered is not correct.")
 
+
 class AccountRecoveryPage3(QMainWindow):
     """Account Recovery Page3 class: Provides access to the user to recover an account used in the application."""
 
@@ -407,11 +408,19 @@ class AccountRecoveryPage3(QMainWindow):
 
     def update_password(self):
         """A function that will update the user password details in the UserDetails.txt"""
+        f = 'TempUsernames.txt'
         ff = "UserDetails.txt"
         regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
-        search_key1 = "username"
-        modify_key = "password"
         new_value = self.passwordTxtInput.text().upper()
+
+        try:
+            # Read all the usernames from the file
+            with open(f, "r") as file:
+                usernames = file.read().split('\n')
+                print(usernames)
+        # If the file cannot be found print error statement.
+        except FileNotFoundError:
+            print("File does not exist, creating new file...")
 
         if len(new_value) < 8:
             self.errorLabel.setText("Password length must be greater than 8 characters long.")
@@ -424,7 +433,7 @@ class AccountRecoveryPage3(QMainWindow):
 
         else:
             # Hash the password using SHA-256
-            hashed_password = hashlib.sha256(new_value.encode()).hexdigest()
+            hashed_password = hashlib.sha512(new_value.encode()).hexdigest()
 
             # Read all the dictionaries from the file
             with open(ff, "r") as file:
@@ -432,8 +441,8 @@ class AccountRecoveryPage3(QMainWindow):
 
             # Modify the required dictionary
             for dictionary in dict_list:
-                if dictionary.get(search_key1) == hashed_password:
-                    dictionary[modify_key] = new_value
+                if dictionary.get('username') in usernames:
+                    dictionary['password'] = hashed_password
                     break  # Stop searching after the first match is found
 
             # Write all the dictionaries back to the file

@@ -132,7 +132,7 @@ QPushButton#proceedButton:hover {
     <widget class="QPushButton" name="mainMenuButton">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>100</x>
        <y>650</y>
        <width>201</width>
        <height>61</height>
